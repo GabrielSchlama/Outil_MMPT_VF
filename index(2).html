@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Outil d'aide à la décision - utilisation du financement MMPT – CCAS de Nanterre</title>
+<style>
+:root{--bg:#f5f7f4;--card:#fff;--tx:#1d2822;--mut:#5f6c65;--ac:#2f6b4f;--ac2:#e8f1ec;--bd:#dfe5df;--bd2:#edf1ed;--warn:#c03a2b;--ok:#2f6b4f;--cv:#2f6b4f;--at:#d98e2b;--de:#4a7fb5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121613;--card:#1c221e;--tx:#eceee9;--mut:#a2ac9f;--ac:#7cc29c;--ac2:#243528;--bd:#333c35;--bd2:#2a332c;--warn:#ff8a80;--ok:#7cc29c;--cv:#7cc29c;--at:#e8a94d;--de:#7aa7d6}}
+:root[data-theme="dark"]{--bg:#121613;--card:#1c221e;--tx:#eceee9;--mut:#a2ac9f;--ac:#7cc29c;--ac2:#243528;--bd:#333c35;--bd2:#2a332c;--warn:#ff8a80;--ok:#7cc29c;--cv:#7cc29c;--at:#e8a94d;--de:#7aa7d6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,b{font-weight:700}a{color:var(--ac)}[hidden]{display:none!important}
+/* Barre supérieure */
+.top{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--bd)}
+.top-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:10px 20px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand .logo{width:32px;height:32px;border-radius:8px;background:var(--ac);display:grid;place-items:center;color:#fff;flex:none}
+.brand b{font-size:14px;display:block;line-height:1.2;white-space:nowrap}.brand small{color:var(--mut);font-size:12px;display:block;white-space:nowrap}
+.nav{display:flex;gap:2px;flex:1;justify-content:center}
+.nav a{white-space:nowrap;font-size:13px;font-weight:600;color:var(--mut);text-decoration:none;padding:6px 12px;border-radius:6px}
+.nav a:hover{background:var(--ac2);color:var(--ac)}
+.top-k{display:flex;align-items:center;gap:16px;margin-left:auto}
+.tk{text-align:right}.tk small{display:block;font-size:11px;color:var(--mut);line-height:1.1}
+.tk b{font-size:16px;font-variant-numeric:tabular-nums;white-space:nowrap}.tk b.bad{color:var(--warn)}.tk b.zero{color:var(--ok)}
+.tbtn{border:1px solid var(--bd);background:var(--card);color:var(--mut);font:600 12px/1 inherit;padding:7px 11px;border-radius:6px;cursor:pointer}
+.tbtn:hover{border-color:var(--ac);color:var(--ac)}
+@media(max-width:900px){.nav{display:none}.brand small{display:none}}
+@media(max-width:560px){.tk.tot{display:none}.brand b{font-size:13px}}
+/* En-tête et structure */
+.hero{max-width:1100px;margin:28px auto 0;padding:0 20px}
+.hero h1{font-size:clamp(22px,3.6vw,30px);line-height:1.2;margin:0 0 8px}
+.hero .sub{color:var(--mut);margin:0;font-size:14px}.hero .sub b{color:var(--tx)}
+.main{max-width:1100px;margin:0 auto 40px;padding:0 20px}
+section{scroll-margin-top:70px}
+.sect{font-size:20px;margin:40px 0 4px;padding-left:12px;border-left:4px solid var(--ac)}
+.sect-sub{color:var(--mut);font-size:13.5px;margin:0 0 16px;padding-left:16px;max-width:820px}
+.rep-toggle{display:flex;justify-content:center;margin:32px 0 0}
+.toggle-btn{border:1.5px solid var(--ac);background:var(--card);color:var(--ac);font:700 14px/1 inherit;padding:13px 26px;border-radius:8px;cursor:pointer}
+.toggle-btn:hover{background:var(--ac);color:#fff}
+.toggle-btn:focus-visible,.pill:focus-visible,.chip:focus-visible,input[type=range]:focus-visible{outline:3px solid color-mix(in srgb,var(--ac) 40%,transparent);outline-offset:2px}
+/* Exemples */
+.scen{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.scen>span{font-size:13px;color:var(--mut);font-weight:600}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);font:600 13px/1 inherit;padding:8px 14px;border-radius:8px;cursor:pointer}
+.chip:hover{border-color:var(--ac)}.chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
+/* Cartes */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:20px;min-width:0}
+.card h3{margin:0 0 12px;font-size:15px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media(max-width:840px){.grid2{grid-template-columns:1fr}}
+.in-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.ico{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--ic) 14%,transparent);color:var(--ic)}
+.ico svg{width:19px;height:19px}
+.in-title{flex:1;min-width:0}.in-title h3{margin:0 0 2px;font-size:14.5px;line-height:1.35}.in-title small{color:var(--mut);font-size:13px}
+.val{background:var(--ac2);color:var(--ac);border-radius:8px;padding:5px 12px;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer;margin:2px 0 8px}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:99px;background:linear-gradient(90deg,var(--ac) var(--p,0%),var(--bd) var(--p,0%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-7px;border-radius:50%;background:#fff;border:3px solid var(--ac)}
+input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:var(--bd)}
+input[type=range]::-moz-range-progress{height:8px;border-radius:99px;background:var(--ac)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--ac)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.tag{display:inline-flex;align-items:baseline;gap:6px;font-size:13px;padding:4px 10px;border-radius:6px;background:var(--bg);border:1px solid var(--bd2)}
+.tag small{color:var(--mut);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.ref-box{margin-top:12px;border:1px solid var(--bd2);border-radius:8px;padding:10px 12px;background:var(--bg)}
+.ref-title{display:block;font-size:13px;color:var(--mut);margin:0 0 7px}
+.ref-items{display:flex;flex-wrap:wrap;gap:6px}
+.ref-item{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--mut);border:1px solid var(--bd);border-radius:99px;padding:2px 11px;background:var(--card)}
+.ref-item::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--at);flex:none}
+.ref-item b{color:var(--tx);font-variant-numeric:tabular-nums}
+.hint{color:var(--mut);font-size:13px;margin:10px 0 0}
+.info{font-size:13px;color:var(--mut);border-left:3px solid var(--bd);padding:4px 0 4px 10px;margin:8px 0 0}
+.half{margin-top:2px;width:100%}
+/* Résultats */
+.band{display:grid;grid-template-columns:minmax(290px,380px) 1fr;gap:16px}
+@media(max-width:740px){.band{grid-template-columns:1fr}}
+.hero-k{background:var(--ac);color:#fff;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.hero-k small{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;opacity:.9}
+.hero-k .mega{font-size:clamp(34px,4.6vw,44px);font-variant-numeric:tabular-nums;line-height:1.05}
+.cov{height:8px;border-radius:99px;background:rgba(255,255,255,.3);overflow:hidden}
+.cov i{display:block;height:100%;border-radius:99px;background:currentColor;opacity:.95;transition:width .4s}
+.cov-note{font-size:13px;margin:0;opacity:.92}
+.okbadge{display:inline-flex;align-items:center;background:rgba(255,255,255,.2);border-radius:99px;padding:5px 12px;font-size:13px;font-weight:600;width:max-content}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+.k-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:560px){.kpis,.k-row{grid-template-columns:1fr}}
+.k{background:var(--card);border:1px solid var(--bd);border-top:3px solid var(--kc,var(--bd));border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:center;min-height:80px}
+.k small{color:var(--mut);font-size:12.5px;font-weight:600;display:block;margin-bottom:2px}
+.k b{font-size:20px;font-variant-numeric:tabular-nums}
+/* Répartition */
+.rep-grid{display:grid;grid-template-columns:minmax(210px,250px) 1.25fr 1fr;gap:16px;align-items:start}
+@media(max-width:1100px){.rep-grid{grid-template-columns:1fr 1fr}.rep-grid .donut-card{grid-column:1/-1;justify-self:center;width:100%;max-width:480px}}
+@media(max-width:740px){.rep-grid{grid-template-columns:1fr}}
+.donut-card{text-align:center}.donut{width:min(200px,58vw);margin:0 auto;display:block}
+.dn-bg{fill:none;stroke:var(--bd2);stroke-width:5.4}
+.dn{fill:none;stroke-width:5.4;stroke-dasharray:0 100;stroke-dashoffset:25;transition:stroke-dasharray .4s,stroke-dashoffset .4s}
+.s0{stroke:var(--cv)}.s1{stroke:var(--at)}.s2{stroke:var(--de)}
+.dn-t1{fill:var(--tx);font-size:5px;font-weight:700;text-anchor:middle}.dn-t2{fill:var(--mut);font-size:2.7px;text-anchor:middle}
+.leg{display:grid;gap:6px;margin-top:12px;text-align:left}
+.lg{display:flex;align-items:center;gap:8px;font-size:13.5px}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}.lg span{color:var(--mut);flex:1}
+.lg b,.lg small{font-variant-numeric:tabular-nums}.lg small{color:var(--mut)}
+.w{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 8px;text-align:right;border-bottom:1px solid var(--bd2);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--mut);font-weight:600;font-size:12px}
+tfoot td{font-weight:700;border-top:2px solid var(--bd);border-bottom:0}
+td b{font-variant-numeric:tabular-nums}
+.mk{font-weight:800}.mk.ok{color:var(--ok)}.mk.no{color:var(--mut)}
+#tas,#qui{font-size:12.5px}#tas th,#qui th{white-space:normal;font-size:11.5px}#tas td,#qui td{padding:8px 5px}#qui th:not(:first-child),#qui td:not(:first-child){text-align:center}
+/* Zones repliables */
+.fold{margin-top:14px;border-top:1px solid var(--bd2);padding-top:10px}
+.fold>summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--ac);list-style:none}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::before{content:"＋ "}.fold[open]>summary::before{content:"－ "}
+.fold>summary:hover{text-decoration:underline}
+.fold .w,.fold .impact-list{margin-top:10px}
+.wide-fold{margin-top:16px;border:1px solid var(--bd);border-radius:12px;background:var(--card);padding:14px 18px}
+#aid2 th,#aid2 td{white-space:normal}#aid2 td b{display:block}#aid2 td small{color:var(--mut);font-size:12px}
+#aid2 th:not(:first-child),#aid2 td:not(:first-child){text-align:left;padding-left:26px}#aid2 tfoot td{padding-left:26px}
+/* Chèques Verts */
+.cv-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
+@media(max-width:900px){.cv-grid{grid-template-columns:1fr}}
+.f{margin-bottom:18px}.f:last-child{margin-bottom:0}
+.f>label,.lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:600;margin-bottom:8px;font-size:14px}
+.f>label span,.lab span{white-space:nowrap;font-variant-numeric:tabular-nums;background:var(--ac2);color:var(--ac);border-radius:8px;padding:2px 10px;font-size:13px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.pill{flex:1;min-width:78px;padding:10px 8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer;font:600 13.5px/1.25 inherit;text-align:center}
+.pill:hover:not(.on){border-color:var(--ac)}.pill.on{background:var(--ac);border-color:var(--ac);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hero-k,:root:not([data-theme="light"]) .pill.on,:root:not([data-theme="light"]) .chip.on{color:#0f1f16}}
+:root[data-theme="dark"] .hero-k,:root[data-theme="dark"] .pill.on,:root[data-theme="dark"] .chip.on{color:#0f1f16}
+.cv-res{display:flex;flex-direction:column;gap:14px;border-top:3px solid var(--ac)}
+.cv-res .rk small{color:var(--mut);font-size:12.5px;font-weight:600}
+.cv-res .rk b{display:block;font-size:clamp(28px,3.6vw,36px);font-variant-numeric:tabular-nums}.cv-res .rk b.bad{color:var(--warn)}
+.rk-split{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rk-split .k{min-height:70px}
+.impact-intro{color:var(--mut);font-size:13px;margin:10px 0 12px}.impact-intro b{color:var(--warn)}.impact-intro b.minus{color:var(--ok)}
+.impact-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.impact-card{background:var(--bg);border:1px solid var(--bd2);border-radius:10px;padding:12px 14px}
+.impact-card h3{font-size:12.5px;margin:0 0 6px;color:var(--mut)}
+.impact-option{display:flex;justify-content:space-between;align-items:center;gap:9px;padding:7px 0;border-top:1px solid var(--bd2);font-size:13.5px}
+.impact-option:first-of-type{border-top:0}.impact-option b{font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.impact-option.current{font-weight:700;color:var(--ac)}.impact-option .up{color:var(--warn)}.impact-option .down{color:var(--ok)}
+footer{max-width:1100px;margin:0 auto;padding:20px 20px 32px;color:var(--mut);font-size:13px;text-align:center;border-top:1px solid var(--bd)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top-in">
+  <div class="brand">
+    <span class="logo"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21C5 11 11 5 21 4c-1 10-7 16-16 17z"/><path d="M5 21c4-4 8-7 12-9"/></svg></span>
+    <div><b>MMPT · CCAS de Nanterre</b><small>Outil d'aide à la décision</small></div>
+  </div>
+  <nav class="nav" aria-label="Sections">
+    <a href="#projet">Actions</a><a href="#resultats">Coût et reste à charge</a><a href="#repartition" class="rep-nav" hidden>Détail de la répartition du financement</a><a href="#cheques" class="rep-nav" hidden>Modalités Chèques Verts</a>
+  </nav>
+  <div class="top-k">
+    <div class="tk"><small>Reste à charge</small><b id="tRac" aria-live="polite">–</b></div>
+    <div class="tk tot"><small>Coût du projet</small><b id="tTot">–</b></div>
+    <button class="tbtn" id="theme" aria-label="Changer de thème">Auto</button>
+  </div>
+</div></div>
+
+<header class="hero">
+  <h1>Outil d'aide à la décision – utilisation du financement MMPT</h1>
+  <p class="sub">Alliance Nanterrienne pour une alimentation durable, choisie et de qualité · CCAS de Nanterre · Rappel du financement MMPT obtenu : <b id="fin"></b></p>
+</header>
+
+<main class="main">
+
+<!-- ================= PROJET ================= -->
+<section id="projet">
+  <h2 class="sect">Les actions menées dans le cadre du projet</h2>
+  <p class="sect-sub">Tous les réglages se font ici : ajustez les curseurs, les sections suivantes se lisent comme un rapport d'analyse mis à jour automatiquement. Les repères 2026 et prévisionnel 2027 (ce qui était envisagé si le financement demandé était entièrement obtenu) sont indiqués pour chaque action.</p>
+  <div class="scen">
+    <span>Exemples de répartition :</span>
+    <button class="chip ref" id="sc26" type="button">Réalisé 2026</button>
+    <button class="chip ref" id="sc27" type="button">Prévisionnel 2027</button>
+  </div>
+
+  <div class="grid2">
+    <article class="card">
+      <div class="in-head">
+        <span class="ico" style="--ic:var(--at)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v3a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6z"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M3 21h18"/></svg></span>
+        <div class="in-title">
+          <h3>Nombre d'ateliers cuisine et/ou repas partagés financés</h3>
+          <small>Montant correspondant : <b id="vnatcost"></b></small>
+        </div>
+        <output class="val" id="vnat" for="nat"></output>
+      </div>
+      <input type="range" id="nat" min="0" max="150" value="0" step="1" aria-label="Nombre d'ateliers cuisine et/ou repas partagés financés">
+      <button type="button" class="pill half" id="half" aria-pressed="false">Diviser le coût d’un atelier par 2 (200 € au lieu de 400 €)</button>
+      <p class="info">Coût d’un atelier retenu : <b id="atunit">400 €</b></p>
+      <div class="ref-box">
+        <span class="ref-title">En 2026, 49 ateliers ont été organisés :</span>
+        <div class="ref-items">
+          <span class="ref-item">VRAC Seine Ouest <b>12</b></span>
+          <span class="ref-item">Nahda <b>15</b></span>
+          <span class="ref-item">Dir El Kheir <b>0</b></span>
+          <span class="ref-item">Mon épicerie <b>22</b></span>
+        </div>
+        <span class="ref-title" style="margin:8px 0 0">En prévisionnel 2027, 63 ateliers devaient être organisés.</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="in-head">
+        <span class="ico" style="--ic:var(--de)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 12a1.7 1.7 0 0 1-1.7 1.8H6.7A1.7 1.7 0 0 1 5 19z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></span>
+        <div class="in-title">
+          <h3>Montant du financement à l'achat de denrées – Mon épicerie</h3>
+        </div>
+        <output class="val" id="vme" for="me"></output>
+      </div>
+      <input type="range" id="me" min="0" max="60000" step="500" value="0" aria-label="Montant du financement à l'achat de denrées – Mon épicerie">
+      <div class="tags">
+        <span class="tag"><small>2026</small> 36 000 €</span>
+        <span class="tag"><small>Prévisionnel 2027</small> 20 000 €</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="in-head">
+        <span class="ico" style="--ic:var(--de)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 12a1.7 1.7 0 0 1-1.7 1.8H6.7A1.7 1.7 0 0 1 5 19z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></span>
+        <div class="in-title">
+          <h3>Montant du financement à l'achat de denrées – Dir El Kheir</h3>
+        </div>
+        <output class="val" id="vdek" for="dek"></output>
+      </div>
+      <input type="range" id="dek" min="0" max="60000" step="500" value="0" aria-label="Montant du financement à l'achat de denrées – Dir El Kheir">
+      <button type="button" class="pill half" id="rep22" aria-pressed="false" hidden>Compter les 22 000 € de denrées non dépensés en 2025</button>
+      <div class="tags">
+        <span class="tag"><small>2026</small> <span id="dek26">4 000 € (+ 22 000 € non dépensés en 2025)</span></span>
+        <span class="tag"><small>Prévisionnel 2027</small> 10 000 €</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="in-head">
+        <span class="ico" style="--ic:var(--cv)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.8 5.8 0 0 1 11 0"/><circle cx="17" cy="9" r="2.6"/><path d="M14.5 15.6a4.6 4.6 0 0 1 7 3"/></svg></span>
+        <div class="in-title">
+          <h3>Nombre estimé de participants au second volet de l'expérimentation Chèques Verts</h3>
+          <small>Montant correspondant : <b id="vn2cost"></b></small>
+        </div>
+        <output class="val" id="vn2" for="n2"></output>
+      </div>
+      <input type="range" id="n2" min="0" max="400" step="1" value="0" aria-label="Nombre de participants au second volet de l'expérimentation Chèques Verts">
+      <div class="tags">
+        <span class="tag"><small>2026</small> 339 participants sur 19 mois</span>
+        <span class="tag"><small>Prévisionnel 2027</small> 216 participants sur 12 mois</span>
+      </div>
+      <p class="hint">Les modalités choisies pour l'expérimentation (bonification, durée de détention…) influent sur le coût du projet par participant. Elles peuvent être modifiées dans la section « <a href="#cheques">Modalités Chèques Verts</a> », accessible via le bouton « Rapport détaillé ».</p>
+    </article>
+  </div>
+</section>
+
+<!-- ================= RÉSULTATS ================= -->
+<section id="resultats">
+  <h2 class="sect">Coût et reste à charge pour le CCAS</h2>
+  <p class="sect-sub">Calculé automatiquement à partir de vos réglages de la section « Actions ».</p>
+  <div class="band">
+    <div class="hero-k">
+      <small>Reste à charge pour le CCAS</small>
+      <b class="mega" id="kRac" aria-live="polite"></b>
+      <div class="cov"><i id="covFill" style="width:0%"></i></div>
+      <p class="cov-note"><b id="covPct"></b> du coût total du projet couvert par le financement MMPT (31 200 €)</p>
+      <span class="okbadge" id="okBadge" hidden>✓ Projet entièrement couvert par le financement MMPT</span>
+    </div>
+    <div class="kpis">
+      <div class="k" style="--kc:var(--bd)"><small>Coût total du projet</small><b id="kTot"></b></div>
+      <div class="k" style="--kc:var(--warn)"><small>Prise en charge par le financement MMPT</small><b id="kPc"></b></div>
+      <div class="k-row">
+        <div class="k" style="--kc:var(--cv)"><small>Chèques Verts</small><b id="kCv"></b></div>
+        <div class="k" style="--kc:var(--at)"><small>Ateliers</small><b id="kAt"></b></div>
+        <div class="k" style="--kc:var(--de)"><small>Achats de denrées</small><b id="kDe"></b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rep-toggle">
+  <button class="toggle-btn" id="repBtn" type="button" aria-expanded="false">Rapport détaillé ↓</button>
+</div>
+
+<!-- ================= RÉPARTITION ================= -->
+<section id="repartition" hidden>
+  <h2 class="sect">Détail de la répartition du financement MMPT</h2>
+  <p class="sect-sub">Répartition calculée automatiquement et proportionnellement aux coûts de chaque action réglés ci-dessus.</p>
+  <div class="rep-grid">
+    <article class="card donut-card">
+      <h3>Répartition par action</h3>
+      <svg class="donut" viewBox="0 0 42 42" role="img" aria-label="Répartition du financement MMPT par action">
+        <circle class="dn-bg" cx="21" cy="21" r="15.9"/>
+        <circle class="dn s0" id="d0" cx="21" cy="21" r="15.9"/>
+        <circle class="dn s1" id="d1" cx="21" cy="21" r="15.9"/>
+        <circle class="dn s2" id="d2" cx="21" cy="21" r="15.9"/>
+        <text class="dn-t1" id="dTxt" x="21" y="20.8">31 200 €</text>
+        <text class="dn-t2" x="21" y="25">financement MMPT</text>
+      </svg>
+      <div class="leg" id="leg"></div>
+    </article>
+    <article class="card">
+      <h3>Répartition par association</h3>
+      <div class="w"><table id="tas"></table></div>
+    </article>
+    <article class="card">
+      <h3>Les actions menées par association</h3>
+      <div class="w"><table id="qui"></table></div>
+    </article>
+  </div>
+  <details class="fold wide-fold">
+    <summary>Informations sur la répartition 2026 et prévisionnel 2027</summary>
+    <div class="w"><table id="aid2"></table></div>
+  </details>
+</section>
+
+<!-- ================= CHÈQUES VERTS ================= -->
+<section id="cheques" hidden>
+  <h2 class="sect">Expérimentation Chèques Verts - 2ème volet : modalités et reste à charge</h2>
+  <p class="sect-sub">Les modalités de l'expérimentation Chèques Verts (bonification, durée de détention, participation financière, montant mensuel) se règlent ici — les sections « Coût et reste à charge », « Détail de la répartition » et les résultats ci-contre se mettent à jour automatiquement. </p>
+  <div class="cv-grid">
+    <article class="card">
+      <div class="f">
+        <div class="lab">Nombre estimé de participants <span id="vN"></span></div>
+        <p class="info">Nombre repris depuis la section « <a href="#projet">Actions</a> ».</p>
+      </div>
+      <div class="f"><div class="lab">Bonification (bonus bio)</div><div class="seg" id="bon" role="group" aria-label="Bonification"></div></div>
+      <div class="f"><div class="lab">Durée de détention</div><div class="seg" id="dur" role="group" aria-label="Durée de détention"></div></div>
+      <div class="f"><div class="lab">Participation financière</div><div class="seg" id="par" role="group" aria-label="Participation financière"></div></div>
+      <div class="f"><div class="lab">Montant mensuel</div><div class="seg" id="mon" role="group" aria-label="Montant mensuel"></div>
+        <p class="info" id="mhint"></p>
+      </div>
+      <details class="impact fold">
+        <summary>Comprendre l'impact de chaque choix</summary>
+        <p class="impact-intro">Écart de reste à charge par rapport au réglage actuel : <b>+</b> = dépense supplémentaire pour le CCAS ; <b class="minus">−</b> = économie.</p>
+        <div class="impact-list" id="aid3"></div>
+      </details>
+    </article>
+    <article class="card cv-res">
+      <div class="rk">
+        <small>Reste à charge pour le CCAS</small>
+        <b id="cRac" aria-live="polite"></b>
+      </div>
+      <div class="rk-split">
+        <div class="k" style="--kc:var(--bd)"><small>Coût total du projet</small><b id="cCost"></b></div>
+        <div class="k" style="--kc:var(--warn)"><small>Financement MMPT (Chèques Verts)</small><b id="cFin"></b></div>
+      </div>
+      <p class="hint">Le financement MMPT (Chèques Verts) dépend de la répartition choisie au-dessus.</p>
+      <p class="hint">Les 5 400 € de frais fixes sont dus à partir du premier participant.</p>
+    </article>
+  </div>
+
+</section>
+
+</main>
+
+<footer>Alliance Nanterrienne pour une alimentation durable, choisie et de qualité · CCAS de Nanterre · Financement MMPT obtenu : 31 200 €</footer>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id),
+ E=v=>Math.round(v).toLocaleString('fr-FR')+' €',
+ P=v=>(v*100).toFixed(1).replace('.',',')+' %',
+ D=x=>x.toFixed(2).replace('.',',').replace(',00','')+' €';
+const C={fin:31200,frais:1800+360*10,com:.05,tva:.2,bonus:.16,mois:.77*50+.13*35+.10*25,at:400,str:4,cap:30000};
+const AS=['Mon épicerie','Dir El Kheir','VRAC Seine Ouest','Nahda'];
+// Répartition des ateliers par structure : réalisée en 2026, prévue en 2027.
+// En 2027, Dir El Kheir reçoit la même part que VRAC Seine Ouest.
+const AT_SHARES=[22/61,12/61,12/61,15/61];
+const REF={2026:{cv:73900,a:19600,d:62000,k:[.54,.32,.07,.07],p:[.17,0,1,1]},2027:{cv:78000,a:25000,d:30000,k:[.51,.25,.12,.12],p:[.28,.28,1,1]}};
+for(const y in REF){const r=REF[y],t=r.cv+r.a+r.d;r.t=t;r.sh=[r.cv/t,r.a/t,r.d/t];
+ const wa=r.k.map((x,i)=>x*r.p[i]),wd=r.k.map((x,i)=>x*(1-r.p[i])),sa=wa.reduce((x,y)=>x+y,0),sd=wd.reduce((x,y)=>x+y,0);r.ka=sa?wa.map(x=>x/sa):wa;r.kd=sd?wd.map(x=>x/sd):wd}
+const pl=y=>REF[y].t-REF[y].cv;
+const S={n:0,bon:.5,dur:6,par:0,mon:0,sh:[0,0,0],nat:0,me:0,dek:0};
+const opt={bon:[[0,'0 %'],[.25,'25 %'],[.5,'50 %']],dur:[[4,'4 mois'],[6,'6 mois'],[10,'10 mois']],par:[[0,'0 %'],[.1,'10 %'],[.15,'15 %'],[.2,'20 %']],mon:[[0,'Le même'],[-.1,'− 10 %'],[-.2,'− 20 %']]};
+const SCEN=[{v:{nat:49,me:36000,dek:26000,n:204},m:s=>s.nat===49&&s.me===36000&&(s.dek===26000||s.dek===4000)&&s.n===204},
+            {v:{nat:63,me:20000,dek:10000,n:216},m:s=>s.nat===63&&s.me===20000&&s.dek===10000&&s.n===216}];
+function cvc(s){
+ const horsUnitaire=C.mois*(1+s.mon)*s.dur;
+ const brutUnitaire=horsUnitaire*(1+C.bonus*s.bon/.5);
+ const netUnitaire=brutUnitaire*(1-s.par);
+ const commissionUnitaire=brutUnitaire*C.com*(1+C.tva);
+ const coutUnitaire=netUnitaire+commissionUnitaire;
+ // Les 5 400 € de frais fixes ne sont dus qu'à partir du premier participant.
+ return{cost:s.n>0?s.n*coutUnitaire+C.frais:0,c:coutUnitaire};
+}
+function projectCosts(){const q=cvc(S);return{cv:q.cost,at:S.nat*C.at,de:S.me+S.dek,total:q.cost+S.nat*C.at+S.me+S.dek,q}}
+function atelierShares(){return AT_SHARES}
+function associationCosts(p){return atelierShares().map((w,i)=>p.at*w+[S.me,S.dek,0,0][i])}
+function updateAutomaticAllocations(){
+ const p=projectCosts(),weights=[p.cv,p.at,p.de],total=weights.reduce((a,b)=>a+b,0);
+ S.sh=total>0?weights.map(v=>v/total):[0,0,0];
+}
+function model(){
+ const T=C.fin,p=projectCosts(),[cv,a,d]=S.sh,share=atelierShares(),foodTotal=p.de;
+ const foodShares=foodTotal>0?[S.me/foodTotal,S.dek/foodTotal,0,0]:[0,0,0,0];
+ const asa=share.map(w=>T*a*w),asd=foodShares.map(w=>T*d*w);
+ const fin=T*cv,rac=Math.max(0,p.q.cost-fin),unit=p.q.c;
+ return{cv,a,d,fin,cost:p.q.cost,rac,asa,asd,tot:cv+a+d,nat:Math.floor(T*a/C.at),assocCost:associationCosts(p)};
+}
+/* ---------- Affichage ---------- */
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NV=new Map();
+function anim(el,val,fmt){
+ if(!el)return;
+ const from=NV.has(el)?NV.get(el):0;NV.set(el,val);
+ if(RM||from===val){el.textContent=fmt(val);return}
+ if(el._raf)cancelAnimationFrame(el._raf);
+ const t0=performance.now(),DUR=420;
+ const step=t=>{const p=Math.min(1,(t-t0)/DUR),e=1-Math.pow(1-p,3);
+  el.textContent=fmt(from+(val-from)*e);
+  if(p<1)el._raf=requestAnimationFrame(step)};
+ el._raf=requestAnimationFrame(step);
+}
+function paint(r){const p=(r.value-r.min)/(r.max-r.min)*100;r.style.setProperty('--p',p+'%')}
+function drawDonut(cv,a,d){
+ const v=[cv,a,d];let off=25;
+ v.forEach((x,i)=>{const c=$('d'+i),len=x*100;
+  c.style.strokeDasharray=len+' '+(100-len);c.style.strokeDashoffset=off;off-=len});
+}
+const tb=(h,rows,f='')=>'<thead><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</tbody>'+f;
+/* Construction statique des tableaux et listes */
+$('tas').innerHTML=tb(['Association','Ateliers','Achats de denrées','Total','Part'],
+ AS.map((a,i)=>[a,'<span id="ta'+i+'">–</span>','<span id="td'+i+'">–</span>','<b id="tt'+i+'"></b>','<span id="tp'+i+'">–</span>']),
+ '<tfoot><tr><td>Total</td><td id="tsa"></td><td id="tsd"></td><td id="tsum"></td><td id="tsp"></td></tr></tfoot>');
+$('qui').innerHTML=tb(['Structure','Ateliers','Achats de denrées'],
+ AS.map((a,i)=>[a,'<span class="mk" id="qa'+i+'">–</span>','<span class="mk" id="qd'+i+'">–</span>']));
+$('aid2').innerHTML=tb(['Association','2026','Prévisionnel 2027'],
+ AS.map((a,i)=>[a,...[2026,2027].map(y=>'<b>'+E(REF[y].k[i]*pl(y))+'</b><small>'+P(REF[y].k[i])+'</small>')]),
+ '<tfoot><tr><td>Montant total réparti (Chèques Verts exclus)</td><td>'+E(pl(2026))+'</td><td>'+E(pl(2027))+'</td></tr></tfoot>');
+$('leg').innerHTML=[['Chèques Verts','cv','lcv','pcv'],['Ateliers','at','lat','pat'],['Achats de denrées','de','lde','pde']]
+ .map(x=>'<div class="lg"><i style="background:var(--'+x[1]+')"></i><span>'+x[0]+'</span><b id="'+x[2]+'"></b><small id="'+x[3]+'"></small></div>').join('');
+const IL=[['Durée de détention','dur'],['Bonification','bon'],['Participation financière','par'],['Montant mensuel','mon']];
+$('aid3').innerHTML=IL.map((x,ci)=>'<section class="impact-card"><h3>'+x[0]+'</h3>'+
+ opt[x[1]].map((o,oi)=>'<div class="impact-option" id="io'+ci+'-'+oi+'"><span>'+o[1]+'</span><b id="iv'+ci+'-'+oi+'"></b></div>').join('')+'</section>').join('');
+function seg(id,key){
+ const el=$(id);el.innerHTML='';
+ opt[key].forEach(o=>{const b=document.createElement('button');b.type='button';b.className='pill'+(S[key]===o[0]?' on':'');
+  b.textContent=o[1];b.setAttribute('aria-pressed',S[key]===o[0]?'true':'false');
+  b.onclick=()=>{S[key]=o[0];[].forEach.call(el.children,x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false')});
+   b.classList.add('on');b.setAttribute('aria-pressed','true');run()};
+  el.appendChild(b)});
+}
+function syncSliders(){
+ [['nat','nat'],['me','me'],['dek','dek'],['n2','n']].forEach(p=>{
+  const el=$(p[0]);el.value=S[p[1]];paint(el)});
+}
+/* Liaison des curseurs : le nombre de participants ne se règle que dans la section « Actions » (curseur n2) ;
+   la section « Modalités Chèques Verts » l'affiche en lecture seule, calqué sur ce choix. */
+[['nat','nat'],['me','me'],['dek','dek'],['n2','n']].forEach(p=>{
+ const el=$(p[0]);paint(el);
+ el.addEventListener('input',()=>{S[p[1]]=+el.value;paint(el);run()});
+});
+/* Coût d'un atelier : 400 € ou 200 € (divisé par 2) */
+S.half=false;
+$('half').onclick=()=>{S.half=!S.half;C.at=S.half?200:400;$('half').classList.toggle('on',S.half);$('half').setAttribute('aria-pressed',S.half?'true':'false');run()};
+/* Report des 22 000 € de denrées Dir El Kheir non dépensés en 2025 : comptés (26 000 €) ou non (4 000 €).
+   Le bouton n'est visible que lorsque le scénario « Réalisé 2026 » est actif (géré dans run()). */
+$('rep22').onclick=()=>{S.dek=S.dek===26000?4000:26000;syncSliders();run()};
+/* Scénarios */
+function applyScen(i){Object.assign(S,SCEN[i].v);syncSliders();run()}
+$('sc26').onclick=()=>applyScen(0);
+$('sc27').onclick=()=>applyScen(1);
+/* Thème */
+const TH=['','light','dark'],TN=['Auto','Clair','Sombre'];let ti=0;
+$('theme').onclick=()=>{ti=(ti+1)%3;document.documentElement.setAttribute('data-theme',TH[ti]);$('theme').textContent=TN[ti]};
+/* Rapport détaillé : seules les sections « Actions » et « Coût et reste à charge » sont visibles par défaut ;
+   les sections « Détail de la répartition » et « Modalités Chèques Verts » s'affichent à la demande. */
+const repBtn=$('repBtn'),repSecs=[$('repartition'),$('cheques')];
+let repOpen=false;
+function setRep(open){
+ repOpen=open;
+ repSecs.forEach(s=>{s.hidden=!open});
+ repBtn.textContent=open?'Masquer le rapport détaillé ↑':'Rapport détaillé ↓';
+ repBtn.setAttribute('aria-expanded',open?'true':'false');
+ [].forEach.call(document.querySelectorAll('.rep-nav'),a=>{a.hidden=!open});
+}
+repBtn.onclick=()=>{setRep(!repOpen);if(repOpen)setTimeout(()=>$('repartition').scrollIntoView({behavior:'smooth'}),60)};
+[].forEach.call(document.querySelectorAll('a[href="#repartition"],a[href="#cheques"]'),a=>{
+ a.addEventListener('click',()=>{
+  if(repOpen)return;
+  const h=a.getAttribute('href');
+  setRep(true);setTimeout(()=>document.querySelector(h).scrollIntoView({behavior:'smooth'}),60);
+ });
+});
+/* Moteur d'affichage */
+function run(){
+ updateAutomaticAllocations();
+ const m=model(),p=projectCosts(),shares=atelierShares();
+ const sa=m.asa.reduce((x,y)=>x+y,0),sd=m.asd.reduce((x,y)=>x+y,0),sum=sa+sd;
+ $('fin').textContent=E(C.fin);$('dTxt').textContent=E(C.fin);
+ $('vnat').textContent=S.nat;$('vnatcost').textContent=E(S.nat*C.at);$('atunit').textContent=E(C.at);
+ $('vme').textContent=E(S.me);$('vdek').textContent=E(S.dek);
+ ['vN','vn2'].forEach(i=>$(i).textContent=S.n);
+ $('vn2cost').textContent=E(cvc(S).cost);
+ $('n2').value=S.n;paint($('n2'));
+ // Résultat global du projet
+ const q=cvc(S),at=S.nat*C.at,de=S.me+S.dek,tot=q.cost+at+de,pc=Math.min(tot,C.fin),rg=Math.max(0,tot-C.fin);
+ anim($('tRac'),rg,E);$('tRac').className=rg>0?'bad':'zero';
+ anim($('tTot'),tot,E);
+ anim($('kRac'),rg,E);
+ const cov=tot>0?pc/tot:0;
+ $('covFill').style.width=(cov*100)+'%';$('covPct').textContent=P(cov);
+ $('okBadge').hidden=rg>0;
+ anim($('kTot'),tot,E);anim($('kPc'),pc,E);anim($('kCv'),q.cost,E);anim($('kAt'),at,E);anim($('kDe'),de,E);
+ // Répartition du financement par action
+ drawDonut(m.cv,m.a,m.d);
+ anim($('lcv'),C.fin*m.cv,E);$('pcv').textContent=P(m.cv);
+ anim($('lat'),C.fin*m.a,E);$('pat').textContent=P(m.a);
+ anim($('lde'),C.fin*m.d,E);$('pde').textContent=P(m.d);
+ // Répartition par association
+ AS.forEach((a,i)=>{
+  const t=m.asa[i]+m.asd[i],fd=[S.me,S.dek,0,0][i];
+  $('ta'+i).textContent=m.asa[i]?E(m.asa[i]):'–';
+  $('td'+i).textContent=m.asd[i]?E(m.asd[i]):'–';
+  $('tt'+i).textContent=E(t);
+  $('tp'+i).textContent=sum?P(t/sum):'–';
+  $('qa'+i).textContent=S.nat>0&&shares[i]>0?'✓':'–';$('qa'+i).className='mk '+((S.nat>0&&shares[i]>0)?'ok':'no');
+  $('qd'+i).textContent=fd>0?'✓':'–';$('qd'+i).className='mk '+(fd>0?'ok':'no');
+ });
+ $('tsa').textContent=E(sa);$('tsd').textContent=E(sd);$('tsum').textContent=E(sum);$('tsp').textContent=sum?P(1):'0 %';
+ // Scénarios actifs
+ const c26=SCEN[0].m(S),c27=SCEN[1].m(S);
+ $('sc26').classList.toggle('on',c26);$('sc27').classList.toggle('on',c27);
+ // Bouton de report des 22 000 € : visible uniquement quand le scénario « Réalisé 2026 » est actif.
+ const on26=c26&&S.dek===26000;
+ $('rep22').hidden=!c26;
+ $('rep22').classList.toggle('on',on26);
+ $('rep22').setAttribute('aria-pressed',on26?'true':'false');
+ $('dek26').textContent=on26?'26 000 € (dont 22 000 € non dépensés en 2025)':'4 000 € (+ 22 000 € non dépensés en 2025)';
+ // Expérimentation Chèques Verts
+ $('mhint').textContent=(S.mon?(S.mon*100).toString().replace('-','− ')+' % : ':'Le même : ')+D(25*(1+S.mon))+' (1-6 ans) · '+D(35*(1+S.mon))+' (7-10 ans) · '+D(50*(1+S.mon))+' (+11 ans)';
+ anim($('cRac'),m.rac,E);$('cRac').classList.toggle('bad',m.rac>0);
+ anim($('cCost'),m.cost,E);anim($('cFin'),m.fin,E);
+ // Effet de chaque réglage par rapport au choix actuellement sélectionné.
+ const rc=s=>Math.max(0,cvc(s).cost-m.fin),cur=rc(S);
+ IL.forEach((x,ci)=>opt[x[1]].forEach((o,oi)=>{
+  const isCur=S[x[1]]===o[0],delta=rc(Object.assign({},S,{[x[1]]:o[0]}))-cur;
+  $('io'+ci+'-'+oi).classList.toggle('current',isCur);
+  const iv=$('iv'+ci+'-'+oi);
+  iv.className=delta>0?'up':delta<0?'down':'';
+  iv.textContent=isCur?'Réglage actuel':(delta>0?'+ ':delta<0?'− ':'')+(delta===0?E(0):E(Math.abs(delta)));
+ }));
+}
+seg('bon','bon');seg('dur','dur');seg('par','par');seg('mon','mon');
+run();
+})();
+</script>
+</body>
+</html>
